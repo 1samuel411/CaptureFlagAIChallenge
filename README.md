@@ -29,7 +29,7 @@ These rules should be self-explanatory for the most part. If you need to break a
 # Instructions
 
 ## Downloading the Project
-1. Press 'Clone or download' in the upper left
+1. Press 'Clone or download' in the upper right
 
 ## Getting Started
 1. Open Scenes/level.unity
