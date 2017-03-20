@@ -1,5 +1,7 @@
 
-.center[![alt tag](http://samuelarminana.com/u/38_20_03_2017.png)]
+<p align="center">
+<img src="http://samuelarminana.com/u/38_20_03_2017.png"/>
+</p>
 
 # Welcome to the Capture the Flag AI Challenge!
 
