@@ -85,4 +85,14 @@ public class Flag : MonoBehaviour, IGrabable
     {
         return transform.position;
     }
+
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
+    public void SetGrabbed(bool grabbed)
+    {
+        this.grabbed = grabbed;
+    }
 }

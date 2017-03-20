@@ -10,4 +10,8 @@ public interface IGrabable
     Vector3 GetLocation();
 
     bool Grabbed();
+
+    void SetGrabbed(bool grabbed);
+
+    Transform GetTransform();
 }

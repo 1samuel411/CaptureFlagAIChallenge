@@ -84,8 +84,8 @@ public class Soldier : MonoBehaviour, IAgent
         currentWeapon.SetOwner(this);
     }
 
-    public List<Flag> flagsInSight;
-    public List<Soldier> soldiersInSight;
+    public List<IGrabable> flagsInSight;
+    public List<IAgent> soldiersInSight;
 
     void EyeSight()
     {
@@ -244,22 +244,22 @@ public class Soldier : MonoBehaviour, IAgent
         flagTransform = null;
     }
 
-    public void GrabFlag(Flag flag)
+    public void GrabFlag(IGrabable flag)
     {
-        if (flag.teamFlag == teamType)
+        if (flag.GetTeam() == teamType)
             return;
 
-        if ((flag.transform.position - transform.position).magnitude > minFlagRange)
+        if ((flag.GetTransform().position - transform.position).magnitude > minFlagRange)
             return;
 
-        flag.transform.SetParent(flagHolder);
-        flag.transform.localPosition = Vector3.zero;
-        flag.transform.localRotation = Quaternion.identity;
+        flag.GetTransform().SetParent(flagHolder);
+        flag.GetTransform().localPosition = Vector3.zero;
+        flag.GetTransform().localRotation = Quaternion.identity;
 
-        flag.grabbed = true;
-        flag.GetComponent<BoxCollider>().enabled = false;
+        flag.SetGrabbed(true);
+        flag.GetTransform().GetComponent<BoxCollider>().enabled = false;
         
-        flagTransform = flag.transform;
+        flagTransform = flag.GetTransform();
     }
 
     public delegate void FlagStatusChangedCallback(Flag flag);

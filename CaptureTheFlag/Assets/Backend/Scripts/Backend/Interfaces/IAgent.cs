@@ -18,7 +18,7 @@ public interface IAgent
     Transform GetFlagHolder();
 
     void DropFlag();
-    void GrabFlag(Flag flag);
+    void GrabFlag(IGrabable flag);
     bool HasFlag();
     Transform GetFlag();
 

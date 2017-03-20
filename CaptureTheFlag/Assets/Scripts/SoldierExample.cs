@@ -71,17 +71,17 @@ public class SoldierExample : SoldierWrapper
         if (soldiersInSight.Count > 0)
         {
             // See if any soldiers in sight are on the enemy team
-            Soldier targetSoldier = null;
+            IAgent targetSoldier = null;
             for (int i = 0; i < soldiersInSight.Count; i++)
             {
-                if (soldiersInSight[i].teamType != soldier.GetTeam())
+                if (soldiersInSight[i].GetTeam() != soldier.GetTeam())
                 {
                     targetSoldier = soldiersInSight[i];
                 }
             }
 
             // enemy spotted?
-            enemySpotted = targetSoldier;
+            enemySpotted = targetSoldier != null;
 
             // Any enemy soldiers in sight?
             if (targetSoldier != null)
@@ -98,15 +98,6 @@ public class SoldierExample : SoldierWrapper
         {
             // No soldiers so no enemey could be spotted
             enemySpotted = false;
-        }
-
-        // Grab any flags we see, they wont be grabbed unless they are on the other team and we are within distance
-        if (flagsInSight.Count > 0)
-        {
-            for (int i = 0; i < flagsInSight.Count; i++)
-            {
-                GrabFlag(flagsInSight[i]);
-            }
         }
 
         if (soldier.HasFlag() && !returningToSpawn)

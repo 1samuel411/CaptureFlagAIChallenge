@@ -10,8 +10,8 @@ public class SoldierWrapper : MonoBehaviour
 
     public IAgent soldier;
 
-    public List<Soldier> soldiersInSight { get { return _soldier.soldiersInSight; } }
-    public List<Flag> flagsInSight { get { return _soldier.flagsInSight; } }
+    public List<IAgent> soldiersInSight { get { return _soldier.soldiersInSight; } }
+    public List<IGrabable> flagsInSight { get { return _soldier.flagsInSight; } }
 
     public Vector3 enemySpawnLocation;
     public Vector3 spawnLocation;
@@ -44,6 +44,17 @@ public class SoldierWrapper : MonoBehaviour
 
     public void Update()
     {
+        if (!_soldier.hasFlag)
+        {
+            if (flagsInSight.Count > 0)
+            {
+                for (int i = 0; i < flagsInSight.Count; i++)
+                {
+                    GrabFlag(flagsInSight[i]);
+                }
+            }
+        }
+
         if (_soldier.IsDead())
         {
             _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
@@ -55,7 +66,7 @@ public class SoldierWrapper : MonoBehaviour
     /// Grabs the provided flag if the flag is on the other team and we are within distance
     /// </summary>
     /// <param name="flag"></param>
-    public void GrabFlag(Flag flag)
+    public void GrabFlag(IGrabable flag)
     {
         _soldier.GrabFlag(flag);
     }
