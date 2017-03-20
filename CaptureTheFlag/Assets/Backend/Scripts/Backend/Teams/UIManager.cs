@@ -57,9 +57,7 @@ public class UIManager : MonoBehaviour
         int minutes = time/60;
         int seconds = time - (minutes * 60);
 
-
-
-        string timeString = minutes.ToString() + ":" + seconds;
+        string timeString = minutes.ToString() + ":" + ((seconds < 10) ? "0" : "") + seconds;
 
         return timeString;
     }
