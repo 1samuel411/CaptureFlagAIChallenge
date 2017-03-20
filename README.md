@@ -8,6 +8,11 @@
 # Documentation
 Take a look at our Github Wiki page for documentation
 
+# Judging
+Three different tournaments will occur with team sizes set at 1v1, 2v2, and 4v4.
+
+During judging your bots will go through a single-elimination tournament. [More Info](https://www.wikiwand.com/en/Single-elimination_tournament)
+
 # Rules
 1. You cannot store instances of objects, this includes but is not limited to, IAgent or Soldier classes and IGrabbable or Flag classes. These classes should not be accessed anywhere out of the callbacks provided.
 2. Using or Getting components of the following classes is prohibited, (UIManager, TeamManager, CameraManager, Spawn, Flag, Weapon, Soldier, AnimationController, PoolManager, PoolObject)
