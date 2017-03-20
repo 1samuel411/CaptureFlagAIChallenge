@@ -69,6 +69,11 @@ public class GridManager : MonoBehaviour
             }
         }
 
+        if (closestCell == null)
+        {
+            closestCell = grid[new Vector2(0, 0)];
+        }
+
         return closestCell;
     }
 

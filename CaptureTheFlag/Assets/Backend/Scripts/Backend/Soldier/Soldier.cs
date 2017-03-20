@@ -84,8 +84,8 @@ public class Soldier : MonoBehaviour, IAgent
         currentWeapon.SetOwner(this);
     }
 
-    public List<IGrabable> flagsInSight;
-    public List<IAgent> soldiersInSight;
+    public List<IGrabable> flagsInSight = new List<IGrabable>();
+    public List<IAgent> soldiersInSight = new List<IAgent>();
 
     void EyeSight()
     {

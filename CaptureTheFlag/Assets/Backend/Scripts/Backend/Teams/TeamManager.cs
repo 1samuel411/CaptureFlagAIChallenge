@@ -15,6 +15,9 @@ public class TeamManager : MonoBehaviour
     [SerializeField]
     private Team bTeam;
 
+    public int maxTime;
+    public int curTime;
+
     void Awake()
     {
         instance = this;
@@ -27,6 +30,14 @@ public class TeamManager : MonoBehaviour
         Debug.Log("Press G to Start Over...");
 
         StartOver();
+
+        InvokeRepeating("ReduceTime", 1, 1);
+    }
+
+    void ReduceTime()
+    {
+        if(curTime > 0)
+            curTime--;
     }
 
     void Update()
@@ -55,14 +66,19 @@ public class TeamManager : MonoBehaviour
 
     void CheckTimers()
     {
-        if (!roundOver)
-            return;
+        if (curTime <= 0 && !timeOver)
+        {
+            RoundOver(null);
+            timeOver = true;
+        }
 
-        if (Time.time >= curRoundOverTime)
+        if (Time.time >= curRoundOverTime && roundOver)
         {
             RoundOverComplete();
         }
     }
+
+    private bool timeOver = false;
 
     // checks if flag is another location
     void CheckFlags()
@@ -94,7 +110,8 @@ public class TeamManager : MonoBehaviour
     void RoundOver(Team team)
     {
         UIManager.instance.RoundOver(team);
-        team.teamScore++;
+        if(team != null)
+            team.teamScore++;
 
         roundOver = true;
         curRoundOverTime = Time.time + roundOverTime;
@@ -158,6 +175,9 @@ public class TeamManager : MonoBehaviour
 
         aTeam.spawn.flag.ResetFlag();
         bTeam.spawn.flag.ResetFlag();
+
+        curTime = maxTime;
+        timeOver = false;
     }
 
     public Team GetTeamA()

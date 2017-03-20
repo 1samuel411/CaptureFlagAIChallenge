@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
 
     public Text timeSpeedText;
 
+    public Text timerText;
+
     public float curTime = 1;
     public void IncreaseTime()
     {
@@ -39,6 +41,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
+        timerText.text = GetTimeString(TeamManager.instance.curTime);
         Time.timeScale = curTime;
         timeSpeedText.text = curTime + "x";
 
@@ -49,9 +52,26 @@ public class UIManager : MonoBehaviour
         teamBText.text = teamB.teamName + "\n" + "Score: " + teamB.teamScore;
     }
 
+    public string GetTimeString(int time)
+    {
+        int minutes = time/60;
+        int seconds = time - (minutes * 60);
+
+
+
+        string timeString = minutes.ToString() + ":" + seconds;
+
+        return timeString;
+    }
+
     public void RoundOver(Team winner)
     {
         roundOverGameObject.SetActive(true);
+        if (winner == null)
+        {
+            roundOverText.text = "<color=white>Draw!</color>";
+            return;
+        }
         roundOverText.text = "<color=" + ((winner.teamType == Team.Type.A) ? "red" : "blue") + ">" + winner.teamName + " has won!</color>";
     }
 
