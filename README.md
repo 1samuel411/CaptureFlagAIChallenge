@@ -28,7 +28,7 @@ These rules should be self-explanatory for the most part. If you need to break a
 
 ## Getting Started
 1. Open Scenes/level.unity
-2. Duplicate the SoldierBase.cs file (ctrl+d)
+2. Duplicate the SoldierBase.cs file (ctrl+d) or create a new class that inherits from the SoldierWrapper class
 3. Create your bot and use the example as reference and take a look at our Github Wiki page for documentation
 
 ## Adding Your bot
