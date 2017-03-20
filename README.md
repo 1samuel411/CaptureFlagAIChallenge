@@ -1,3 +1,6 @@
+
+![alt tag](http://samuelarminana.com/u/00_20_03_2017.png)
+
 # Welcome to the Capture the Flag AI Challenge!
 
 # Documentation
