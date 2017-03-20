@@ -51,6 +51,10 @@ Send your submission directly to me via email: armi.sam99@gmail.com or via skype
 
 **Note:** You should send all files that relate to your entry, so if you have a navigation script, be sure to include that.
 
+<p align="center">
+<img src="http://samuelarminana.com/u/30_20_03_2017.png"/>
+</p>
+
 # Controls for testing
 - WASD - Move Camera
 - Q/E - Zoom in/out
