@@ -320,9 +320,11 @@ public class Cell
     public int z;
     public float yPos;
 
+	// Ignore this
     public bool isVisible;
     public bool isExplored;
-
+	// Ignore ^
+	
     public bool isAvailable = true;
 
     public Cell parentCell;
