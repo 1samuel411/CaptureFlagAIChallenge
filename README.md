@@ -35,6 +35,10 @@ These rules should be self-explanatory for the most part. If you need to break a
 3. Add your custom bot script to the prefab
 4. Press play!
 
+## Changing the bot count
+1. In the level.unity scene click on the TeamManager object
+2. In the TeamManager component, edit the Team Size attribute
+
 ## Sending Your Submission
 Send your submission directly to me via email: armi.sam99@gmail.com or via skype: arminana.s OR send your submission via hastebin links for all necessary code and post it in the forum post.
 
