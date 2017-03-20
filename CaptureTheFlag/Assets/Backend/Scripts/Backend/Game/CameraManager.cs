@@ -28,7 +28,7 @@ public class CameraManager : MonoBehaviour
     {
         SetPosition();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (mapSpectateComponent.enabled)
             {

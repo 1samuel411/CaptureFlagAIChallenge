@@ -151,6 +151,8 @@ public class TeamManager : MonoBehaviour
             bTeam.soldiers.Add(newSoldier);
         }
 
+        UIManager.instance.CreateHealthbars();
+
         aTeam.teamName = aTeam.soldiers[0].GetComponent<Soldier>().soldierName;
         bTeam.teamName = bTeam.soldiers[0].GetComponent<Soldier>().soldierName;
 

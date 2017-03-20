@@ -22,8 +22,9 @@ public class AnimationController : MonoBehaviour
 
     void Update()
     {
-        animator.SetFloat(speedForwardName, _rigidbody.velocity.z);
-        animator.SetFloat(speedHorizontalName, _rigidbody.velocity.x);
+        Vector3 velocity = transform.TransformDirection(_rigidbody.velocity);
+        animator.SetFloat(speedForwardName, velocity.z);
+        animator.SetFloat(speedHorizontalName, velocity.x);
     }
 
     public void UpdateHealth(int newHealth)

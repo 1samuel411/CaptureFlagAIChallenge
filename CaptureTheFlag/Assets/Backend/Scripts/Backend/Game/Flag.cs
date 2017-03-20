@@ -27,7 +27,12 @@ public class Flag : MonoBehaviour, IGrabable
         }
     }
 
-    void Start()
+    public bool Grabbed()
+    {
+        return grabbed;
+    }
+
+    void Awake()
     {
         originalHolder = transform.parent;
     }
@@ -52,6 +57,7 @@ public class Flag : MonoBehaviour, IGrabable
 
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
 
         GetComponent<BoxCollider>().enabled = true;
     }

@@ -1,4 +1,0 @@
-﻿Welcome to the Capture the Flag AI Challenge!
-
-Instructions:
-

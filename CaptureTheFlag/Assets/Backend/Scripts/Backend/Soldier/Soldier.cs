@@ -10,10 +10,14 @@ public class Soldier : MonoBehaviour, IAgent
 
     public IShootable currentWeapon;
 
-    public int health;
+    public int health, maxHealth;
     public int GetHealth()
     {
         return health;
+    }
+    public int GetMaxHealth()
+    {
+        return maxHealth;
     }
 
     public float speed;
@@ -52,7 +56,7 @@ public class Soldier : MonoBehaviour, IAgent
     public Transform flagTransform;
     public bool hasFlag
     {
-        get { return flagTransform == null; }
+        get { return flagTransform != null; }
     }
 
     public Vector3 GetLocation()
@@ -71,6 +75,7 @@ public class Soldier : MonoBehaviour, IAgent
 
     void Awake()
     {
+        maxHealth = health;
         currentWeapon = GetComponentInChildren<IShootable>();
     }
 
@@ -167,8 +172,18 @@ public class Soldier : MonoBehaviour, IAgent
         EyeSight();
 
         rigidbody.velocity = new Vector3(Mathf.Clamp(rigidbody.velocity.x, -speed, speed), rigidbody.velocity.y, Mathf.Clamp(rigidbody.velocity.z, -speed, speed));
-
+        
         animationController.UpdateHealth(health);
+
+        if (IsDead() && HasFlag())
+        {
+            DropFlag();
+        }
+    }
+
+    void LateUpdate()
+    {
+        transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
     }
 
     public delegate void DamagedCallback(Vector3 location);
@@ -183,6 +198,16 @@ public class Soldier : MonoBehaviour, IAgent
         return dead;
     }
 
+    public bool HasFlag()
+    {
+        return hasFlag;
+    }
+
+    public Transform GetFlag()
+    {
+        return flagTransform;
+    }
+
     public int Damage(int damage, Vector3 damagerLocation)
     {
         if (dead)
@@ -194,6 +219,7 @@ public class Soldier : MonoBehaviour, IAgent
         {
             TeamManager.instance.SendDied(this);
             GetComponent<Collider>().enabled = false;
+            rigidbody.isKinematic = true;
         }
 
         if (damagedCallback != null)

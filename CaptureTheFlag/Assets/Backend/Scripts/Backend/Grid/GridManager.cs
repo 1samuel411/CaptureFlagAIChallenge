@@ -23,6 +23,9 @@ public class GridManager : MonoBehaviour
         GenerateGrid();
     }
 
+    /// <summary>
+    /// Generates the grid
+    /// </summary>
     public void GenerateGrid()
     {
         // Create the Mesh
@@ -40,6 +43,12 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns the closest cell based on the position
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="availableOnly"></param>
+    /// <returns></returns>
     public Cell FindClosestCell(Vector2 position, bool availableOnly = false)
     {
 
@@ -63,6 +72,12 @@ public class GridManager : MonoBehaviour
         return closestCell;
     }
 
+    /// <summary>
+    /// Gets the closest Cell
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="availableOnly"></param>
+    /// <returns></returns>
     public Cell FindClosestCell(Vector3 position, bool availableOnly = false)
     {
         return FindClosestCell(new Vector2(position.x, position.z), availableOnly);
@@ -74,6 +89,12 @@ public class GridManager : MonoBehaviour
         cube.transform.position = position;
     }
 
+    /// <summary>
+    /// Checks if a cell is available
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="region"></param>
+    /// <returns></returns>
     public bool IsAvailable(Vector2 position, Vector2 region)
     {
         List<Cell> newCells = FindCellsInRegion(position, region);
@@ -88,9 +109,12 @@ public class GridManager : MonoBehaviour
         return true;
     }
 
-    // region input might look like,
-    // 2, 1
-    // Would have A width of 2 and length of 1
+    /// <summary>
+    /// Returns cells in a region excpet for the initial cell
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="region"></param>
+    /// <returns></returns>
     public List<Cell> FindCellsInRegion(Vector2 position, Vector2 region)
     {
         Cell cellInPosition = FindClosestCell(position);
@@ -106,6 +130,12 @@ public class GridManager : MonoBehaviour
         return newCells;
     }
 
+    /// <summary>
+    /// Gets the height of a cell
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     public float GetHeight(int x, int y)
     {
         RaycastHit hit;
@@ -116,18 +146,35 @@ public class GridManager : MonoBehaviour
         return -1;
     }
 
+    /// <summary>
+    /// Checks again to see if a cell is available
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <returns></returns>
     public bool CheckAvailability(Cell cell)
     {
         return !(Physics.Raycast(new Vector3(cell.x, 150, cell.z), Vector3.down, 10000, obstacleMask));
     }
 
+    /// <summary>
+    /// Returns cells in a region excpet for the initial cell
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="region"></param>
+    /// <returns></returns>
     public List<Cell> FindCellsAroundRegion(Vector2 position, Vector2 region)
     {
         List<Cell> cellsInRegion = FindCellsInRegion(position, region + (Vector2.one * 2));
         return cellsInRegion.Except(FindCellsInRegion(position, region)).ToList();
     }
 
-    public List<Cell> FindCellAdjacent(Cell cell, bool availableOnly = true)
+    /// <summary>
+    /// Returns 8 cells around the cell provided
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="availableOnly">Should only available cells be returned?</param>
+    /// <returns></returns>
+    public List<Cell> FindCellsAround(Cell cell, bool availableOnly = true)
     {
         List<Cell> listToReturn = new List<Cell>();
         for (int i = cell.x - 1; i <= cell.x + 1; i++)
@@ -148,7 +195,60 @@ public class GridManager : MonoBehaviour
         return listToReturn;
     }
 
+    /// <summary>
+    /// Returns 4 adjacent cells around the cell provided
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <param name="availableOnly">Should only available cells be returned?</param>
+    /// <returns></returns>
+    public List<Cell> FindCellsAdjacent(Cell cell, bool availableOnly = true)
+    {
+        List<Cell> listToReturn = new List<Cell>();
+        for (int i = cell.x - 1; i <= cell.x + 1; i++)
+        {
+            if (i == cell.x)
+                continue;
+
+            Cell currentCell = grid[new Vector2(i, cell.z)];
+
+            if (availableOnly && !currentCell.isAvailable)
+                continue;
+
+            listToReturn.Add(currentCell);
+        }
+        for (int y = cell.z - 1; y <= cell.z + 1; y++)
+        {
+            if (y == cell.z)
+                continue;
+
+            Cell currentCell = grid[new Vector2(cell.x, y)];
+
+            if (availableOnly && !currentCell.isAvailable)
+                continue;
+
+            listToReturn.Add(currentCell);
+        }
+        return listToReturn;
+    }
+
+    /// <summary>
+    /// Gets the distance between two cells
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     public static float GetDistance(Cell a, Cell b)
+    {
+        return (new Vector2(a.x, a.z) - new Vector2(b.x, b.z)).magnitude;
+    }
+
+    /// <summary>
+    /// Gets the distance between a position and Cell
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public static float GetDistance(Vector3 a, Cell b)
     {
         return (new Vector2(a.x, a.z) - new Vector2(b.x, b.z)).magnitude;
     }
@@ -163,6 +263,13 @@ public class GridManager : MonoBehaviour
         return list;
     }
 
+    /// <summary>
+    /// Sets the costs for a cell based on inputs
+    /// </summary>
+    /// <param name="openList"></param>
+    /// <param name="targetCell"></param>
+    /// <param name="startCell">s</param>
+    /// <returns></returns>
     public static List<Cell> SetCosts(List<Cell> openList, Cell targetCell, Cell startCell)
     {
         for (int i = 0; i < openList.Count; i++)
@@ -173,7 +280,12 @@ public class GridManager : MonoBehaviour
 
         return openList;
     }
-
+    
+    /// <summary>
+    /// Returns the lowest cost in a list
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
     public static Cell FindLowestCostCell(List<Cell> list)
     {
         float minCost = list.Min(x => x.fCost);
@@ -233,5 +345,10 @@ public class Cell
         this.parentCell = parentCell;
 
         isAvailable = true;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return new Vector3(x, yPos, z);
     }
 }

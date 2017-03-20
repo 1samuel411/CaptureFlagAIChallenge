@@ -8,4 +8,6 @@ public interface IGrabable
     Team.Type GetTeam();
 
     Vector3 GetLocation();
+
+    bool Grabbed();
 }

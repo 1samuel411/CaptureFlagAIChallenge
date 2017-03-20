@@ -41,11 +41,6 @@ public class NavAgentExample : MonoBehaviour
 
     void Update()
     {
-        if (lastCell != currentCell && targetCell != null)
-        {
-            GeneratePath(targetCell);
-            lastCell = currentCell;
-        }
         CheckTarget();
     }
 
@@ -57,7 +52,7 @@ public class NavAgentExample : MonoBehaviour
         if (pathGenerated.Count <= 0 || pathGenerated[0] == null || !pathGenerated[0].isAvailable)
             return;
 
-        if (GridManager.GetDistance(currentCell, pathGenerated[0]) <= distanceNeeded)
+        if (GridManager.GetDistance(transform.position, pathGenerated[0]) <= distanceNeeded)
         {
             pathGenerated.RemoveAt(0);
             return;
@@ -69,7 +64,7 @@ public class NavAgentExample : MonoBehaviour
     {
         pathGenerated.Clear();
 
-        List<Cell> openList = GridManager.instance.FindCellAdjacent(currentCell);
+        List<Cell> openList = GridManager.instance.FindCellsAdjacent(currentCell);
         GridManager.SetParent(openList, currentCell);
         List<Cell> closedList = new List<Cell>();
         Cell finalCell = new Cell(0, 0, 0);
@@ -96,7 +91,7 @@ public class NavAgentExample : MonoBehaviour
                 closedList.Add(cheapestCell);
 
                 // Examine each node around the cheapest node
-                List<Cell> cheapestNeighbors = GridManager.instance.FindCellAdjacent(cheapestCell);
+                List<Cell> cheapestNeighbors = GridManager.instance.FindCellsAdjacent(cheapestCell);
 
                 for (int i = 0; i < cheapestNeighbors.Count; i++)
                 {
@@ -122,7 +117,7 @@ public class NavAgentExample : MonoBehaviour
         return returnList;
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         for (int i = 0; i < pathGenerated.Count; i++)
         {
@@ -133,5 +128,8 @@ public class NavAgentExample : MonoBehaviour
 
             Gizmos.DrawWireCube(new Vector3(pathGenerated[i].x, 2, pathGenerated[i].z), Vector3.one);
         }
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(currentCell.GetPosition() + Vector3.up * 2, Vector3.one);
     }
 }
