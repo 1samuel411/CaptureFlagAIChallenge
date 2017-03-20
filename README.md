@@ -23,7 +23,7 @@ Take a look at our Github Wiki page for documentation
 Send your submission directly to me via email: armi.sam99@gmail.com or via skype: arminana.s OR send your submission via hastebin links for all necessary code and post it in the forum post.
 **Note:** You should send all files that relate to your entry, so if you have a navigation script, be sure to include that.
 
-# Controls for testing:
+# Controls for testing
 - WASD - Move Camera
 - Q/E - Zoom in/out
 - Space - Cycle Spectate
@@ -31,7 +31,7 @@ Send your submission directly to me via email: armi.sam99@gmail.com or via skype
 - H - Reset
 - G - Restart
 
-# Credits for assets useds:
+# Credits for assets useds
 - Denis Sylkin - RTS Camera
 - Unity - Unity Particle Pack
 - Marcelo Fernanadez Music - Music
