@@ -10,11 +10,11 @@ Take a look at our Github Wiki page for documentation
 
 # Rules
 1. You cannot store instances of objects, this includes but is not limited to, IAgent or Soldier classes and IGrabbable or Flag classes. These classes should not be accessed anywhere out of the callbacks provided.
-2. Using or Getting components of the following classes, (UIManager, TeamManager, CameraManager, Spawn, Flag, Weapon, Soldier, AnimationController, PoolManager, PoolObject)
+2. Using or Getting components of the following classes is prohibited, (UIManager, TeamManager, CameraManager, Spawn, Flag, Weapon, Soldier, AnimationController, PoolManager, PoolObject)
 3. Custom navigation systems are allowed, however the unity navmesh system is not, use the Grid provided to your advantage. (GridManager)
 4. You can only move using the MoveTowards and Move methods from the SoldierWrapper class.
 5. You cannot call the DropFlag method on any IAgent that does not belong to you.
-6. No bug abusing. If you see any bugs please notify me as soon as possible!
+6. No bug abusing or exploiting. If you see any bugs please notify me as soon as possible!
 7. Other prohibitions are specified in the Wiki.
 
 These rules should be self-explanatory for the most part. If you need to break any of these rules go ahead but they may not be allowed through to compete with others depending on the situtation.
