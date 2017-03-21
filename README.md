@@ -19,8 +19,9 @@ During judging your bots will go through a single-elimination tournament. [More 
 3. Custom navigation systems are allowed, however the unity navmesh system is not, use the Grid provided to your advantage. (GridManager)
 4. You can only move using the MoveTowards and Move methods from the SoldierWrapper class.
 5. You cannot call the DropFlag method on any IAgent that does not belong to you.
-6. No bug abusing or exploiting. If you see any bugs please notify me as soon as possible!
-7. Other prohibitions are specified in the Wiki.
+5. You cannot casts Ray outside of the RayCast method provided by the soldier class unless you have permission.
+7. No bug abusing or exploiting. If you see any bugs please notify me as soon as possible!
+8. Other prohibitions are specified in the Wiki.
 
 These rules should be self-explanatory for the most part. If you need to break any of these rules go ahead but they may not be allowed through to compete with others depending on the situtation.
 
