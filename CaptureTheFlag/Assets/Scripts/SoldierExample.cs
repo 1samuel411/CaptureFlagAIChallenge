@@ -31,6 +31,7 @@ public class SoldierExample : SoldierWrapper
         base.Start();
 
         navAgent.targetCell = GridManager.instance.FindClosestCell(enemySpawnLocation);
+
     }
 
     void CheckTimer()
@@ -42,6 +43,8 @@ public class SoldierExample : SoldierWrapper
         }    
     }
 
+
+    public Vector3 directionTestVector3;
     void Update()
     {
         base.Update();

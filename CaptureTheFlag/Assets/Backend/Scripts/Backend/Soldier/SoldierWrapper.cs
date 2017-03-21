@@ -63,6 +63,78 @@ public class SoldierWrapper : MonoBehaviour
     }
 
     /// <summary>
+    /// Casts a ray in the direction given
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns>Null if out of our view cone</returns>
+    public RaycastHit Raycast(Vector3 direction)
+    {
+        return Raycast(direction, _soldier.viewDistance);
+    }
+
+    /// <summary>
+    /// Casts a ray in the direction given
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns>Null if out of our view cone</returns>
+    public RaycastHit Raycast(Vector3 direction, float length)
+    {
+        length = Mathf.Clamp(length, -_soldier.viewDistance, _soldier.viewDistance);
+
+        Debug.DrawRay(transform.position + Vector3.up * 1.2f, direction * length, Color.black);
+
+        float angleDif = (transform.localEulerAngles.y - GetRotation(direction)) % 360;
+        if (angleDif < 0)
+            angleDif = 360 + angleDif;
+
+        RaycastHit raycastHit = new RaycastHit();
+
+        // Check if its out of our sight
+        if (angleDif > _soldier.viewRadius && angleDif < (360 - _soldier.viewRadius))
+        {
+            return raycastHit;
+        }
+
+        Physics.Raycast(transform.position + Vector3.up * 1.2f, direction, out raycastHit, _soldier.viewDistance);
+
+        return raycastHit;
+    }
+
+    /// <summary>
+    /// Casts a ray in the direction given
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns>Null if out of our view cone</returns>
+    public RaycastHit Raycast(Vector3 direction, float length, LayerMask layermask)
+    {
+
+        length = Mathf.Clamp(length, -_soldier.viewDistance, _soldier.viewDistance);
+
+        Debug.DrawRay(transform.position + Vector3.up * 1.2f, direction * length, Color.black);
+
+        float angleDif = (transform.localEulerAngles.y - GetRotation(direction)) % 360;
+        if (angleDif < 0)
+            angleDif = 360 + angleDif;
+
+        RaycastHit raycastHit = new RaycastHit();
+
+        // Check if its out of our sight
+        if (angleDif > _soldier.viewRadius && angleDif < (360 - _soldier.viewRadius))
+        {
+            return raycastHit;
+        }
+
+        Physics.Raycast(transform.position + Vector3.up * 1.2f, direction, out raycastHit, _soldier.viewDistance, layermask);
+
+        return raycastHit;
+    }
+
+    private float GetRotation(Vector3 direction)
+    {
+        return ((((180 * Mathf.Atan2(direction.x, direction.z)) / Mathf.PI) + 0) % 360) - 0;
+    }
+
+    /// <summary>
     /// Grabs the provided flag if the flag is on the other team and we are within distance
     /// </summary>
     /// <param name="flag"></param>
