@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SoldierWrapper : MonoBehaviour
@@ -60,6 +61,24 @@ public class SoldierWrapper : MonoBehaviour
             _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
             return;
         }
+    }
+
+    /// <summary>
+    /// Returns a List of SoldierWrappers of bots in your team.
+    /// </summary>
+    /// <returns></returns>
+    public List<SoldierWrapper> GetTeamSoldiers()
+    {
+        List<Soldier> soldiers = (_soldier.teamType == Team.Type.A ? TeamManager.instance.GetTeamA() : TeamManager.instance.GetTeamB()).soldiers;
+        List<SoldierWrapper> soldierWrappers = new List<SoldierWrapper>();
+        for (int i = 0; i < soldiers.Count; i++)
+        {
+            if (soldiers[i] == _soldier)
+                continue;
+
+            soldierWrappers.Add(soldiers[i].GetComponent<SoldierWrapper>());
+        }
+        return soldierWrappers;
     }
 
     /// <summary>
