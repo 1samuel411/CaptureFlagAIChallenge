@@ -45,6 +45,10 @@ public class SoldierWrapper : MonoBehaviour
 
     public void Update()
     {
+        if (_rigidbody.velocity.magnitude > _soldier.speed)
+        {
+          
+        }
         if (!_soldier.hasFlag)
         {
             if (flagsInSight.Count > 0)
@@ -206,12 +210,17 @@ public class SoldierWrapper : MonoBehaviour
             return false;
 
         Vector3 lastRotation = transform.eulerAngles;
-        transform.LookAt(position);
+
+        transform.LookAt(position); // + (transform.right * -0.5f));
+        Vector3 lookAt = transform.forward;
+
         Vector3 newRotation = transform.eulerAngles;
         transform.eulerAngles = lastRotation;
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(newRotation), _soldier.rotationSpeed * Time.deltaTime);
 
-        lookingAt = (Mathf.Abs(transform.eulerAngles.y - newRotation.y)) < 0.5f;
+        //lookingAt = (Mathf.Abs(transform.eulerAngles.y - newRotation.y)) < 0.5f;
+
+        lookingAt = Vector3.Angle(transform.forward, lookAt) < 0.5f;
 
         return lookingAt;
     }

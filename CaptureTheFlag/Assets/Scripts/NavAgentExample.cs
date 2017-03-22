@@ -24,6 +24,11 @@ public class NavAgentExample : MonoBehaviour
         get
         {
             Cell curCell = GridManager.instance.FindClosestCell(new Vector2(transform.position.x, transform.position.z), true);
+            if (lastCell != curCell && targetCell != null)
+            {
+                lastCell = curCell;
+                GeneratePath(targetCell);
+            }
             return curCell;
         }
     }
@@ -61,8 +66,11 @@ public class NavAgentExample : MonoBehaviour
     }
 
     private NavMeshPath path;
-    public void GeneratePath(Cell targetCel)
+    public void GeneratePath(Cell targetCell)
     {
+        if (targetCell == null)
+            return;
+
         path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, targetCell.GetPosition(), NavMesh.AllAreas, path);
         pathGenerated = path.corners.ToList();
