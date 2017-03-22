@@ -66,8 +66,8 @@ public class SoldierExample : SoldierWrapper
             if (!enemySpotted)
             {
                 // Move in the direction of the next path node
-                MoveTowards(navAgent.pathGenerated[0].GetPosition());
-                LookAt(navAgent.pathGenerated[0].GetPosition());
+                MoveTowards(navAgent.pathGenerated[0]);
+                LookAt(navAgent.pathGenerated[0]);
             }
         }
 

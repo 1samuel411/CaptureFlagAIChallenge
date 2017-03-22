@@ -22,7 +22,7 @@ public class AnimationController : MonoBehaviour
 
     void Update()
     {
-        Vector3 velocity = transform.TransformDirection(_rigidbody.velocity);
+        Vector3 velocity = transform.InverseTransformDirection(_rigidbody.velocity);
         animator.SetFloat(speedForwardName, velocity.z);
         animator.SetFloat(speedHorizontalName, velocity.x);
     }

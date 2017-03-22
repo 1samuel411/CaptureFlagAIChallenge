@@ -18,9 +18,8 @@ public class Laser : MonoBehaviour, IAttachments
     public LineRenderer laserLineRenderer;
     public Transform laserEndPoint;
 
-    void Update()
+    void LateUpdate()
     {
-        laserEndPoint.SetParent(null);
         // cast line from point to forward
         RaycastHit hit;
 
@@ -28,7 +27,7 @@ public class Laser : MonoBehaviour, IAttachments
         {
             laserEndPoint.gameObject.SetActive(true);
             laserEndPoint.transform.rotation = Quaternion.FromToRotation(-Vector3.back, hit.normal);
-            laserEndPoint.transform.position = hit.point + transform.forward * -0.04f;
+            laserEndPoint.transform.position = hit.point + transform.forward * -0.015f;
             laserLineRenderer.SetPositions(new []{laserPoint.position, hit.point });
         }
         else
