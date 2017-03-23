@@ -30,6 +30,8 @@ public class Bullet : MonoBehaviour
     public bool layerChanged = false;
     public bool ready = false;
 
+    public Vector3 shooterPos;
+
     void Awake()
     {
         if (_rigidbody == null)
@@ -74,6 +76,8 @@ public class Bullet : MonoBehaviour
                 gameObject.layer = teamBLayer;
             }
 
+            shooterPos = bulletOwner.GetOwner().GetLocation();
+
             layerChanged = true;
         }
     }
@@ -93,7 +97,7 @@ public class Bullet : MonoBehaviour
             bloodImpact.transform.rotation = Quaternion.FromToRotation(-Vector3.back, collision.contacts[0].normal);
             bloodImpact.transform.position = collision.contacts[0].point + transform.up * -0.04f;
 
-            agent.Damage(damage, bulletOwner.GetOwner().GetLocation());
+            agent.Damage(damage, shooterPos);
         }
         else
         {
