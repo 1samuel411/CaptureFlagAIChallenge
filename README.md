@@ -11,6 +11,8 @@ Take a look at our Github Wiki page for documentation
 # Judging
 The game will be judged with team sizes of 8v8.
 
+6 Rounds: The bot with the highest score will move on to the next elimination round.
+
 During judging your bots will go through a single-elimination tournament. [More Info](https://www.wikiwand.com/en/Single-elimination_tournament)
 
 # Rules
