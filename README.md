@@ -9,7 +9,7 @@
 Take a look at our Github Wiki page for documentation
 
 # Judging
-Three different tournaments will occur with team sizes set at 1v1, 2v2, and 4v4.
+The game will be judged with team sizes of 8v8.
 
 During judging your bots will go through a single-elimination tournament. [More Info](https://www.wikiwand.com/en/Single-elimination_tournament)
 
