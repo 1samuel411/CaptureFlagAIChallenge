@@ -220,7 +220,7 @@ public class SoldierWrapper : MonoBehaviour
 
         //lookingAt = (Mathf.Abs(transform.eulerAngles.y - newRotation.y)) < 0.5f;
 
-        lookingAt = Vector3.Angle(transform.forward, lookAt) < 0.5f;
+        lookingAt = Vector3.Angle(transform.forward, lookAt) < 0.1f;
 
         return lookingAt;
     }
