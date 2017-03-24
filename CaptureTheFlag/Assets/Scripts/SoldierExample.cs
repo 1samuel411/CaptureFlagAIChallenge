@@ -90,7 +90,7 @@ public class SoldierExample : SoldierWrapper
             if (targetSoldier != null)
             {
                 // Look at them, if we are, shoot.
-                if (LookAt(soldiersInSight[0].GetLocation()))
+                if (LookAt(targetSoldier.GetLocation()))
                 {
                     // pew pew
                     Shoot();
