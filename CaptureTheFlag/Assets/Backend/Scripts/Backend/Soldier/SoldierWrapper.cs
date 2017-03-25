@@ -102,25 +102,7 @@ public class SoldierWrapper : MonoBehaviour
     /// <returns>Null if out of our view cone</returns>
     public RaycastHit Raycast(Vector3 direction, float length)
     {
-        length = Mathf.Clamp(length, -_soldier.viewDistance, _soldier.viewDistance);
-
-        Debug.DrawRay(transform.position + Vector3.up * 1.2f, direction * length, Color.black);
-
-        float angleDif = (transform.localEulerAngles.y - GetRotation(direction)) % 360;
-        if (angleDif < 0)
-            angleDif = 360 + angleDif;
-
-        RaycastHit raycastHit = new RaycastHit();
-
-        // Check if its out of our sight
-        if (angleDif > _soldier.viewRadius && angleDif < (360 - _soldier.viewRadius))
-        {
-            return raycastHit;
-        }
-
-        Physics.Raycast(transform.position + Vector3.up * 1.2f, direction, out raycastHit, _soldier.viewDistance);
-
-        return raycastHit;
+        return _soldier.Raycast(direction, length);
     }
 
     /// <summary>
@@ -130,31 +112,12 @@ public class SoldierWrapper : MonoBehaviour
     /// <returns>Null if out of our view cone</returns>
     public RaycastHit Raycast(Vector3 direction, float length, LayerMask layermask)
     {
-
-        length = Mathf.Clamp(length, -_soldier.viewDistance, _soldier.viewDistance);
-
-        Debug.DrawRay(transform.position + Vector3.up * 1.2f, direction * length, Color.black);
-
-        float angleDif = (transform.localEulerAngles.y - GetRotation(direction)) % 360;
-        if (angleDif < 0)
-            angleDif = 360 + angleDif;
-
-        RaycastHit raycastHit = new RaycastHit();
-
-        // Check if its out of our sight
-        if (angleDif > _soldier.viewRadius && angleDif < (360 - _soldier.viewRadius))
-        {
-            return raycastHit;
-        }
-
-        Physics.Raycast(transform.position + Vector3.up * 1.2f, direction, out raycastHit, _soldier.viewDistance, layermask);
-
-        return raycastHit;
+        return _soldier.Raycast(direction, length, layermask);
     }
 
     private float GetRotation(Vector3 direction)
     {
-        return ((((180 * Mathf.Atan2(direction.x, direction.z)) / Mathf.PI) + 0) % 360) - 0;
+        return _soldier.GetRotation(direction);
     }
 
     /// <summary>

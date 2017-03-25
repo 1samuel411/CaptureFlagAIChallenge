@@ -87,11 +87,55 @@ public class Soldier : MonoBehaviour, IAgent
     public List<IGrabable> flagsInSight = new List<IGrabable>();
     public List<IAgent> soldiersInSight = new List<IAgent>();
 
+    private List<IAgent> GetSoldiersInSight(List<Soldier> agents)
+    {
+        List<IAgent> inSight = new List<IAgent>();
+        float dist;
+        for (int i = 0; i < agents.Count; i++)
+        {
+            // is us?
+            if (agents[i] == this)
+                continue;
+
+            // raycast to them
+            if (InSight(agents[i].transform))
+            {
+                // hit so add them
+                inSight.Add(agents[i]);
+            }
+        }
+        return inSight;
+    }
+
+    private bool InSight(Transform position)
+    {
+        RaycastHit hit = Raycast(-(transform.position - position.position), viewDistance, viewLayerMask, false);
+        // raycast to them
+        if (hit.transform != null)
+        {
+            // hit the target?
+            if (hit.transform.gameObject.GetInstanceID() == position.gameObject.GetInstanceID()) 
+                // hit so true
+                return true;
+        }
+
+        return false;
+    }
+
     void EyeSight()
     {
         flagsInSight.Clear();
         soldiersInSight.Clear();
 
+        soldiersInSight = GetSoldiersInSight(TeamManager.instance.GetTeamA().soldiers);
+        soldiersInSight.AddRange(GetSoldiersInSight(TeamManager.instance.GetTeamB().soldiers));
+
+        if (InSight(TeamManager.instance.GetTeamA().spawn.flag.transform))
+            flagsInSight.Add(TeamManager.instance.GetTeamA().spawn.flag);
+        if (InSight(TeamManager.instance.GetTeamB().spawn.flag.transform))
+            flagsInSight.Add(TeamManager.instance.GetTeamB().spawn.flag);
+
+        /*
         RaycastHit[] hit;
 
         for (int i = -viewRadius; i < viewRadius; i+=2)
@@ -147,6 +191,7 @@ public class Soldier : MonoBehaviour, IAgent
                 }
             }
         }
+        */
     }
 
     void OnDrawGizmos()
@@ -252,6 +297,9 @@ public class Soldier : MonoBehaviour, IAgent
         if ((flag.GetTransform().position - transform.position).magnitude > minFlagRange)
             return;
 
+        if (flag.Grabbed())
+            return;
+
         flag.GetTransform().SetParent(flagHolder);
         flag.GetTransform().localPosition = Vector3.zero;
         flag.GetTransform().localRotation = Quaternion.identity;
@@ -260,6 +308,73 @@ public class Soldier : MonoBehaviour, IAgent
         flag.GetTransform().GetComponent<BoxCollider>().enabled = false;
         
         flagTransform = flag.GetTransform();
+    }
+
+    /// <summary>
+    /// Casts a ray in the direction given
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns>Null if out of our view cone</returns>
+    public RaycastHit Raycast(Vector3 direction, float length, bool debug = true)
+    {
+        direction.Normalize();
+
+        length = Mathf.Clamp(length, -viewDistance, viewDistance);
+
+        if(debug)
+            Debug.DrawRay(transform.position + Vector3.up * 1.2f, direction * length, Color.black);
+
+        float angleDif = (transform.localEulerAngles.y - GetRotation(direction)) % 360;
+        if (angleDif < 0)
+            angleDif = 360 + angleDif;
+
+        RaycastHit raycastHit = new RaycastHit();
+
+        // Check if its out of our sight
+        if (angleDif > viewRadius && angleDif < (360 - viewRadius))
+        {
+            return raycastHit;
+        }
+
+        Physics.Raycast(transform.position + Vector3.up * 1.2f, direction, out raycastHit, viewDistance);
+
+        return raycastHit;
+    }
+
+    /// <summary>
+    /// Casts a ray in the direction given
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns>Null if out of our view cone</returns>
+    public RaycastHit Raycast(Vector3 direction, float length, LayerMask layermask, bool debug = true)
+    {
+        direction.Normalize();
+
+        length = Mathf.Clamp(length, -viewDistance, viewDistance);
+
+        if(debug)
+            Debug.DrawRay(transform.position + Vector3.up * 1.2f, direction * length, Color.black);
+
+        float angleDif = (transform.localEulerAngles.y - GetRotation(direction)) % 360;
+        if (angleDif < 0)
+            angleDif = 360 + angleDif;
+
+        RaycastHit raycastHit = new RaycastHit();
+
+        // Check if its out of our sight
+        if (angleDif > viewRadius && angleDif < (360 - viewRadius))
+        {
+            return raycastHit;
+        }
+
+        Physics.Raycast(transform.position + Vector3.up * 1.2f, direction, out raycastHit, viewDistance, layermask);
+
+        return raycastHit;
+    }
+
+    public float GetRotation(Vector3 direction)
+    {
+        return ((((180 * Mathf.Atan2(direction.x, direction.z)) / Mathf.PI) + 0) % 360) - 0;
     }
 
     public delegate void FlagStatusChangedCallback(Flag flag);

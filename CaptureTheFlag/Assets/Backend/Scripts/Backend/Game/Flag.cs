@@ -75,7 +75,6 @@ public class Flag : MonoBehaviour, IGrabable
         Gizmos.DrawWireCube(_boxCollider.center + transform.position, _boxCollider.size / 2);
     }
 
-
     public Team.Type GetTeam()
     {
         return teamFlag;
