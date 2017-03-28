@@ -179,10 +179,16 @@ public class SoldierWrapper : MonoBehaviour
 
         Vector3 newRotation = transform.eulerAngles;
         transform.eulerAngles = lastRotation;
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(newRotation), _soldier.rotationSpeed * Time.deltaTime);
 
         //lookingAt = (Mathf.Abs(transform.eulerAngles.y - newRotation.y)) < 0.5f;
 
+        if (!Physics.Raycast(_soldier.currentWeapon.GetMuzzle().position, _soldier.currentWeapon.GetMuzzle().forward,
+            _soldier.viewDistance, _soldier.viewLayerMask))
+        {
+            newRotation.y -= _soldier.rotationSpeed * Time.deltaTime;
+        }
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(newRotation), _soldier.rotationSpeed * Time.deltaTime);
         lookingAt = Vector3.Angle(transform.forward, lookAt) < 0.1f;
 
         return lookingAt;
