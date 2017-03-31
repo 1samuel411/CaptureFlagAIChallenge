@@ -21,9 +21,11 @@ public class Flag : MonoBehaviour, IGrabable
         get { return _grabbed; }
         set
         {
-            _grabbed = value;
-            if(_grabbed != value)
+            if (_grabbed != value)
+            {
+                _grabbed = value;
                 TeamManager.instance.SendFlagMessage(this);
+            }
         }
     }
 

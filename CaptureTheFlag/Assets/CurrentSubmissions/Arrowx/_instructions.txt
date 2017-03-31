@@ -1,0 +1,3 @@
+Attach this script to a soldier prefab and remove their SoldierExample component.
+
+Credits: ArrowX (Forum username)

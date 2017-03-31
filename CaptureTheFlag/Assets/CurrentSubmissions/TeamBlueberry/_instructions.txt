@@ -1,0 +1,3 @@
+The main class is SoldierTeamBlueberry. This is the one which must be attached to the prefab instead of the SoldierExample class.
+
+Credits: THoeppner (Forums username)
