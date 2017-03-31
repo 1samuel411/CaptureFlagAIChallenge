@@ -172,24 +172,32 @@ public class SoldierWrapper : MonoBehaviour
         if (_soldier.IsDead())
             return false;
 
+        // calculate gun offset needed to aim gun at target postion
+
         Vector3 lastRotation = transform.eulerAngles;
 
-        transform.LookAt(position); // + (transform.right * -0.5f));
-        Vector3 lookAt = transform.forward;
+        Transform gun = _soldier.currentWeapon.GetMuzzle();
 
-        Vector3 newRotation = transform.eulerAngles;
-        transform.eulerAngles = lastRotation;
+        Vector3 gunOffset = gun.localPosition;
 
-        //lookingAt = (Mathf.Abs(transform.eulerAngles.y - newRotation.y)) < 0.5f;
+        Vector3 toTarget = position - transform.position;
 
-        if (!Physics.Raycast(_soldier.currentWeapon.GetMuzzle().position, _soldier.currentWeapon.GetMuzzle().forward,
-            _soldier.viewDistance, _soldier.viewLayerMask))
+        float distance = toTarget.magnitude;
+
+        float offsetAngle = Mathf.Atan(-gunOffset.x / distance) * Mathf.Rad2Deg; // x offset to angle offset  
+
+        Quaternion lookRotation = Quaternion.LookRotation(toTarget, transform.up) * Quaternion.AngleAxis(-offsetAngle, Vector3.up);
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, _soldier.rotationSpeed * Time.deltaTime);
+
+        lookingAt = Quaternion.Angle(transform.rotation, lookRotation) < 0.1f;
+
+        if (lookingAt)
         {
-            newRotation.y -= _soldier.rotationSpeed * Time.deltaTime;
-        }
+            Ray ray = new Ray(gun.position, gun.forward);
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(newRotation), _soldier.rotationSpeed * Time.deltaTime);
-        lookingAt = Vector3.Angle(transform.forward, lookAt) < 0.1f;
+            lookingAt = !Physics.SphereCast(ray, 0.15f, distance, 1 << _soldier.obstaclesLayer);
+        }
 
         return lookingAt;
     }

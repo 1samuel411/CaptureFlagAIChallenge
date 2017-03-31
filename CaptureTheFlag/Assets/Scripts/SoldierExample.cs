@@ -54,8 +54,14 @@ public class SoldierExample : SoldierWrapper
         // If we were damaged then look at where we damaged, spray!
         if (damaged)
         {
-            if(LookAt(damagedLocation))
+            if (LookAt(damagedLocation))
+            {
                 Shoot();
+            }
+            else
+            {
+                MoveTowards(navAgent.pathGenerated[0]);
+            }
             return;
         }
 
@@ -94,6 +100,10 @@ public class SoldierExample : SoldierWrapper
                 {
                     // pew pew
                     Shoot();
+                }
+                else
+                {
+                    MoveTowards(navAgent.pathGenerated[0]);
                 }
             }
         }

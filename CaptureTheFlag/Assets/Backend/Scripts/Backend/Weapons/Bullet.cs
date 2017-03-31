@@ -2,9 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour 
+public class Bullet : MonoBehaviour
 {
-    public IShootable bulletOwner;
+    private IShootable _bulletOwner;
+
+    public IShootable bulletOwner
+    {
+        get { return _bulletOwner; }
+        set
+        {
+            _bulletOwner = value;
+
+            if (_bulletOwner == null)
+                return;
+
+            if (bulletOwner.GetOwner().GetTeam() == Team.Type.A)
+            {
+                gameObject.layer = teamALayer;
+            }
+            else if (bulletOwner.GetOwner().GetTeam() == Team.Type.B)
+            {
+                gameObject.layer = teamBLayer;
+            }
+            layerChanged = true;
+
+            shooterPos = bulletOwner.GetOwner().GetLocation();
+        }
+    }
 
     public AudioClip bulletSound;
 
@@ -64,22 +88,6 @@ public class Bullet : MonoBehaviour
             return;
 
         _rigidbody.velocity = (transform.forward * speed);
-
-        if (!layerChanged)
-        {
-            if (bulletOwner.GetOwner().GetTeam() == Team.Type.A)
-            {
-                gameObject.layer = teamALayer;
-            }
-            else if (bulletOwner.GetOwner().GetTeam() == Team.Type.B)
-            {
-                gameObject.layer = teamBLayer;
-            }
-
-            shooterPos = bulletOwner.GetOwner().GetLocation();
-
-            layerChanged = true;
-        }
     }
 
     void OnCollisionEnter(Collision collision)
