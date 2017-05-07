@@ -1,3 +1,11 @@
+# Results
+<p align="center">
+<img src="http://samuelarminana.com/u/45_06_05_2017.png"/>
+</p>
+
+Team Blueberry (THoeppner)
+ArrowXRnd (ArowX)
+Spreader (Oribow)
 
 <p align="center">
 <img src="http://samuelarminana.com/u/38_20_03_2017.png"/>
