@@ -7,11 +7,12 @@
 2. ArrowXRnd (ArowX)
 3. Spreader (Oribow)
 
+
 <p align="center">
 <img src="http://samuelarminana.com/u/38_20_03_2017.png"/>
 </p>
 
-# Welcome to the Capture the Flag AI Challenge!
+# Welcome to the Capture the Flag AI Challenge! 
 
 # Documentation
 Take a look at our Github Wiki page for documentation
